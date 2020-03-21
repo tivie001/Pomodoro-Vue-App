@@ -35,15 +35,29 @@
     methods: {
       assignData() {
         this.task = {
-          id: this.tasks.length + 1,
+          id: this.tasks.length,
           name: this.newTaskName,
           dateAdded: (new Date()).toISOString().split('T')[0],
           time: 100,
           minutes: "25:00",
-          numOfTimers: 1,
+          numOfTimers: 0,
           interval: {},
           totalSeconds: 1500,
-          isRunning: true
+          isRunning: true,
+          shortBreak: {
+            minutes: "5:00",
+            interval: {},
+            totalSeconds: 300,
+            isRunning: true,
+            alreadyRan: false
+          },
+          longBreak: {
+            minutes: "20:00",
+            interval: {},
+            totalSeconds: 1200,
+            isRunning: true,
+            alreadyRan: false
+          }
         }
       },
       addTask() {
@@ -54,8 +68,9 @@
       countdownTimer(taskData) {
         const fractionTime = 100 / 1500;
         taskData.interval = setInterval(() => {
-          if (taskData.time === 1500) {
-            return (taskData.time = 0);
+          if (taskData.time === 0) {
+            this.$store.dispatch('resetTimer', taskData.id);
+            this.$store.dispatch('totalAmountOfTasks', taskData.id);
           }
           if (taskData.isRunning){
             taskData.time -= fractionTime;
@@ -72,5 +87,4 @@
 </script>
 
 <style>
-
 </style>

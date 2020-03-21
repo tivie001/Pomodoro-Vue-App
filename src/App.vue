@@ -2,6 +2,8 @@
   <v-app id="app">
     <v-app-bar app clipped-left>
         <v-toolbar-title>Pomodoro App</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-subheader>Total Pomodoros Completed: {{ totalPomodoros }}</v-subheader>
     </v-app-bar>
 
     <v-content>
@@ -33,6 +35,11 @@ export default {
   data: () => ({
     drawer: null,
   }),
+  computed: {
+      totalPomodoros () {
+          return this.$store.state.totalCompleted;
+      }
+  }
 };
 </script>
 <style>
